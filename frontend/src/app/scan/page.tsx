@@ -32,27 +32,22 @@ const ScanPage = () => {
       scanner.clear();
       const orderNumber = decodedText;
       if (orderNumber) {
-        import api, { axios } from '@/lib/api';
-        // ...
-                const fetchOrder = async () => {
-                    try {
-                        const response = await api.get(`/orders/by-qr/${orderNumber}`, {
-                            headers: { Authorization: `Bearer ${token}` },
-                        });
-                        router.push(`/orders/${response.data.id}`);
-                    } catch (error) {
-                        console.error("Failed to fetch order by QR", error);
-                        if (axios.isAxiosError(error)) {
-                            alert("Order not found!");
-                        } else {
-                            alert("An unexpected error occurred.");
-                        }
-                    }
-                };
-
-
+        const fetchOrder = async () => {
+            try {
+                const response = await api.get(`/orders/by-qr/${orderNumber}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                router.push(`/orders/${response.data.id}`);
+            } catch (error) {
+                console.error("Failed to fetch order by QR", error);
+                if (axios.isAxiosError(error)) {
+                    alert("Order not found!");
+                } else {
+                    alert("An unexpected error occurred.");
+                }
+            }
+        };
         fetchOrder();
-
       }
     };
 

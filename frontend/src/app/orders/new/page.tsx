@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 
 interface Service {
   id: string;
@@ -195,14 +195,6 @@ export default function NewOrderPage() {
                 <button type="submit" className="w-full text-lg px-6 py-3 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
                     Create Order and Generate QR Code
                 </button>
-            </div>
-          </form>
-        </div>
-      </main>
-    </div>
-  );
-}
-n>
             </div>
           </form>
         </div>

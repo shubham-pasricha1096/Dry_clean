@@ -9,7 +9,7 @@ async def get_active_services() -> List[Service]:
     db = get_database()
     services = []
     async for service in db.services.find({"is_active": True}):
-        service["id"] = str(service["_id"])
+        service["_id"] = str(service["_id"])
         services.append(Service(**service))
     return services
 
@@ -17,7 +17,7 @@ async def get_all_services() -> List[Service]:
     db = get_database()
     services = []
     async for service in db.services.find():
-        service["id"] = str(service["_id"])
+        service["_id"] = str(service["_id"])
         services.append(Service(**service))
     return services
 

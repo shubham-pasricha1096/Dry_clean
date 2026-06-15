@@ -73,17 +73,22 @@ export default function NewOrderPage() {
     e.preventDefault();
     setError('');
     const token = localStorage.getItem('token');
-    if (!token) return;
+    import api, { axios } from '@/lib/api';
+    // ...
+        try {
+          const response = await api.post('/orders', formData, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setQrCodeUrl(response.data.qr_code_image_url);
+        } catch (err) {
+          console.error('Failed to create order', err);
+          if (axios.isAxiosError(err)) {
+            setError('Failed to create order. Please check the details and try again.');
+          } else {
+            setError('An unexpected error occurred.');
+          }
+        }
 
-    try {
-      const response = await api.post('/orders', formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setQrCodeUrl(response.data.qr_code_image_url);
-    } catch (err) {
-      console.error('Failed to create order', err);
-      setError('Failed to create order. Please check the details and try again.');
-    }
   };
 
   if (qrCodeUrl) {

@@ -66,7 +66,11 @@ export default function ManageServicesPage() {
         setServices(services.map(s => s.id === service.id ? response.data : s));
     } catch (error) {
         console.error('Failed to update service', error);
-        alert('Failed to update service.');
+        if (axios.isAxiosError(error)) {
+            alert('Failed to update service.');
+        } else {
+            alert('An unexpected error occurred.');
+        }
     }
   };
 

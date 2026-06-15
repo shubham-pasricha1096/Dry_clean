@@ -67,7 +67,11 @@ export default function OrderDetailPage() {
         setHistory(historyRes.data);
       } catch (err) {
         console.error('Failed to fetch order details', err);
-        setError('Failed to fetch order details.');
+        if (axios.isAxiosError(err)) {
+            setError('Failed to fetch order details.');
+        } else {
+            setError('An unexpected error occurred.');
+        }
       }
     };
 

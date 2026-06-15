@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 import DashboardCard from '@/components/DashboardCard';
 
 interface Order {
@@ -30,8 +30,7 @@ export default function DashboardPage() {
         setOrders(response.data);
       } catch (error) {
         console.error('Failed to fetch orders', error);
-        // Handle token expiration, e.g., redirect to login
-        if (error.response?.status === 401) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
             router.push('/login');
         }
       }

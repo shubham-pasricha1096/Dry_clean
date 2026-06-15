@@ -83,7 +83,11 @@ export default function ManageUsersPage() {
         setUsers(users.map(u => u.id === selectedUser.id ? response.data : u));
       } catch (error) {
         console.error('Failed to update user', error);
-        alert('Failed to update user.');
+        if (axios.isAxiosError(error)) {
+            alert('Failed to update user.');
+        } else {
+            alert('An unexpected error occurred.');
+        }
       }
     } else { // Create
       try {
@@ -93,7 +97,11 @@ export default function ManageUsersPage() {
         setUsers([...users, response.data]);
       } catch (error) {
         console.error('Failed to create user', error);
-        alert('Failed to create user.');
+        if (axios.isAxiosError(error)) {
+            alert('Failed to create user.');
+        } else {
+            alert('An unexpected error occurred.');
+        }
       }
     }
     closeModal();

@@ -41,7 +41,7 @@ export default function NewOrderPage() {
 
     const fetchServices = async () => {
       try {
-        const response = await api.get('/services', {
+        const response = await api.get('services', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setServices(response.data);
@@ -61,10 +61,11 @@ export default function NewOrderPage() {
   const handleServiceToggle = (serviceId: string) => {
     setFormData((prev) => {
       const selected = prev.selected_services;
-      if (selected.includes(serviceId)) {
-        return { ...prev, selected_services: selected.filter((id) => id !== serviceId) };
+      const id = String(serviceId);
+      if (selected.includes(id)) {
+        return { ...prev, selected_services: selected.filter((s_id) => s_id !== id) };
       } else {
-        return { ...prev, selected_services: [...selected, serviceId] };
+        return { ...prev, selected_services: [...selected, id] };
       }
     });
   };

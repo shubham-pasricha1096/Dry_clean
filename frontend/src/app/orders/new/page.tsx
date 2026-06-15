@@ -73,22 +73,21 @@ export default function NewOrderPage() {
     e.preventDefault();
     setError('');
     const token = localStorage.getItem('token');
-    import api, { axios } from '@/lib/api';
-    // ...
-        try {
-          const response = await api.post('/orders', formData, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setQrCodeUrl(response.data.qr_code_image_url);
-        } catch (err) {
-          console.error('Failed to create order', err);
-          if (axios.isAxiosError(err)) {
-            setError('Failed to create order. Please check the details and try again.');
-          } else {
-            setError('An unexpected error occurred.');
-          }
-        }
+    if (!token) return;
 
+    try {
+      const response = await api.post('/orders', formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setQrCodeUrl(response.data.qr_code_image_url);
+    } catch (err) {
+      console.error('Failed to create order', err);
+      if (axios.isAxiosError(err)) {
+        setError('Failed to create order. Please check the details and try again.');
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
   };
 
   if (qrCodeUrl) {
@@ -196,6 +195,14 @@ export default function NewOrderPage() {
                 <button type="submit" className="w-full text-lg px-6 py-3 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
                     Create Order and Generate QR Code
                 </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  );
+}
+n>
             </div>
           </form>
         </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 
 const ScanPage = () => {
   const [scanResult, setScanResult] = useState<string | null>(null);

@@ -9,7 +9,7 @@ from app.db.mongodb import get_database
 
 router = APIRouter()
 
-@router.post("/login/access-token", response_model=Token)
+@router.post("/access-token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await crud_user.get_user_by_email(form_data.username)
     if not user or not verify_password(form_data.password, user.password_hash):

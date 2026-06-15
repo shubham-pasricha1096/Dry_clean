@@ -10,7 +10,7 @@ async def get_user_by_email(email: str) -> Optional[User]:
     db = get_database()
     user = await db.users.find_one({"email": email})
     if user:
-        user["id"] = str(user["_id"])
+        user["_id"] = str(user["_id"])
         return User(**user)
     return None
 
@@ -18,7 +18,7 @@ async def get_user(user_id: str) -> Optional[User]:
     db = get_database()
     user = await db.users.find_one({"_id": ObjectId(user_id)})
     if user:
-        user["id"] = str(user["_id"])
+        user["_id"] = str(user["_id"])
         return User(**user)
     return None
 
@@ -26,7 +26,7 @@ async def get_users() -> List[User]:
     db = get_database()
     users = []
     async for user in db.users.find():
-        user["id"] = str(user["_id"])
+        user["_id"] = str(user["_id"])
         users.append(User(**user))
     return users
 

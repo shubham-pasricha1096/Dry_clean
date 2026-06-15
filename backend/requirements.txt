@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+pydantic
+motor
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+qrcode[pil]
+python-telegram-bot
+email-validator
+python-multipart
+dnspython
+bcrypt==4.0.1

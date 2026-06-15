@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 import Link from 'next/link';
 
 interface Service {
@@ -24,7 +24,7 @@ export default function ManageServicesPage() {
       setServices(response.data);
     } catch (error) {
       console.error('Failed to fetch services', error);
-      if (error.response?.status === 403) {
+      if (axios.isAxiosError(error) && error.response?.status === 403) {
         alert("You don't have permission to view this page.");
         router.push('/dashboard');
       }
@@ -53,7 +53,11 @@ export default function ManageServicesPage() {
       setNewServiceName('');
     } catch (error) {
       console.error('Failed to create service', error);
-      alert('Failed to create service.');
+      if (axios.isAxiosError(error)) {
+        alert('Failed to create service.');
+      } else {
+        alert('An unexpected error occurred.');
+      }
     }
   };
   
@@ -86,7 +90,11 @@ export default function ManageServicesPage() {
       setServices(services.filter(s => s.id !== serviceId));
     } catch (error) {
       console.error('Failed to delete service', error);
-      alert('Failed to delete service.');
+      if (axios.isAxiosError(error)) {
+          alert('Failed to delete service.');
+      } else {
+          alert('An unexpected error occurred.');
+      }
     }
   };
 

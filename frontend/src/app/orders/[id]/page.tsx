@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 
 interface Order {
   id: string;
@@ -89,7 +89,11 @@ export default function OrderDetailPage() {
       setHistory(response.data.history);
     } catch (err) {
       console.error('Failed to update status', err);
-      alert('Failed to update status.');
+      if (axios.isAxiosError(err)) {
+          alert('Failed to update status.');
+      } else {
+          alert('An unexpected error occurred.');
+      }
     }
   };
   

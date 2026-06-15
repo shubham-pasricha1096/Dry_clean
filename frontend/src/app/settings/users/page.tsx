@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
+import api, { axios } from '@/lib/api';
 import Link from 'next/link';
 import UserModal from '@/components/UserModal';
 
@@ -35,7 +35,7 @@ export default function ManageUsersPage() {
         setUsers(response.data);
       } catch (error) {
         console.error('Failed to fetch users', error);
-        if (error.response?.status === 403) {
+        if (axios.isAxiosError(error) && error.response?.status === 403) {
             alert("You don't have permission to view this page.");
             router.push('/dashboard');
         }
@@ -57,7 +57,11 @@ export default function ManageUsersPage() {
         setUsers(users.filter(u => u.id !== userId));
     } catch (error) {
         console.error('Failed to delete user', error);
-        alert('Failed to delete user.');
+        if (axios.isAxiosError(error)) {
+            alert('Failed to delete user.');
+        } else {
+            alert('An unexpected error occurred.');
+        }
     }
   };
 
